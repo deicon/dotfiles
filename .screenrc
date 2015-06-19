@@ -1,0 +1,18 @@
+shell -${SHELL}
+defscrollback 1024
+startup_message off
+hardstatus on
+hardstatus alwayslastline
+#caption always "%3n %t%? @%u%?%? [%h]%?%=%c"
+caption always "%{= wk} %-w%{= KW} [%n %t] %{-}%+w %= | @%H | %l | %Y-%m-%d %c "
+
+bind ' ' windowlist -b 
+
+########## Default screens
+
+screen -t VIM
+screen -t bash
+screen -t TOP
+
+select 0
+
