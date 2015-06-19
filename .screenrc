@@ -12,7 +12,7 @@ bind ' ' windowlist -b
 
 screen -t VIM
 screen -t bash
-screen -t TOP
+screen -t git
 
 select 0
 
