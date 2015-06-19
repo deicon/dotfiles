@@ -1,0 +1,14 @@
+VERSION	217
+MruCmd.data	{'word': ':q', 'time': 1383589656}
+MruCmd.data	{'word': ':helptags vim-fuzzyfinder-pathogen/doc/', 'time': 1383497627}
+MruCmd.data	{'word': ':NERDTree', 'time': 1383497610}
+MruCmd.data	{'word': ':help maven-plugin', 'time': 1383497410}
+MruCmd.data	{'word': ':helptags vim-maven-plugin/doc', 'time': 1383497404}
+MruCmd.data	{'word': ':helptags vim-maven-plugin/doc/maven.txt', 'time': 1383497399}
+MruCmd.data	{'word': ':shell', 'time': 1383497330}
+MruCmd.data	{'word': ':w', 'time': 1383497327}
+MruCmd.data	{'word': ':!mvn install', 'time': 1383497311}
+MruFile.data	{'word': '/Users/dieter/.vim/bundle/vim-fuzzyfinder-pathogen/plugin/fuzzyfinder.vim', 'time': 1383497645}
+MruFile.data	{'word': '/Users/dieter/.vim/bundle/NERD_tree_1', 'time': 1383497610}
+MruFile.data	{'word': '/Users/dieter/.vim/bundle/vim-maven-plugin/doc/maven.txt', 'time': 1383497382}
+MruFile.data	{'word': '/Development/Workspace/json-webapp/service/src/main/java/de/deicon/json/services/TradeServiceImpl.java', 'time': 1383497327}
