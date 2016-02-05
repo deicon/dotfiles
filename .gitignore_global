@@ -1,0 +1,12 @@
+**/*.class
+.idea/*
+target/*
+*DS_STORE
+.settings
+.classpath
+.project
+**/angular*/docs/*
+render-server-xslt/target
+render-server-transformation/target
+render-server-pdf/target
+*.swp
