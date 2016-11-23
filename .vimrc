@@ -1,18 +1,18 @@
-
+" Pathogen Plugin Setup"{{{
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
-
-set nocompatible
-
-set modelines=0
-
+" Pathogen Plugin Setup
+"}}}
+" Preambel"{{{
 let mapleader = ","
+let localleader = "-"
 " Quickly edit .vimrc
-nnoremap <leader>ev :split $MYVIMRC<CR>  
-nnoremap <leader>sv :source $MYVIMRC<CR>     
+nnoremap <silent><leader>ev :vsplit $MYVIMRC<CR>:set foldmethod=marker<cr>:set foldlevel=0<cr>
+nnoremap <leader>sv :source $MYVIMRC<CR>  
 
-" Standards
+"}}}
+" Global GUI Settings"{{{
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -39,11 +39,19 @@ set formatoptions=qrn1
 set colorcolumn=120
 set listchars=
 set mouse=a
+set nocompatible
+set noswapfile
+set modelines=0
+" Toolbar options for GVIM
+set guioptions-=T " No Toolbar
+set guioptions-=m " No Menubar
 
 " put useful info in status bar
- set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [%l,%c]\ [%L,%p%%]
+" set statusline=%F%m%r%h%w\ [%l,%c]\ %{fugitive#statusline()}\[%L,%p%%]
 
- " set dark background and color scheme
+ " set dark background and color scheme"
+ "}}}
+ " Setting up My Colors"{{{1
  set background=dark
  colorscheme desert
 
@@ -53,27 +61,37 @@ set mouse=a
    au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
 endif
 
- "setup  up some custom colors
+ "setup  up some custom colors"{{{2
  highlight clear SignColumn
- highlight VertSplit    ctermbg=236
+ highlight VertSplit    ctermbg=green
+ highlight VertSplit    ctermbg=green
  highlight ColorColumn  ctermbg=237
- highlight LineNr       ctermbg=236 ctermfg=240
- highlight CursorLineNr ctermbg=236 ctermfg=240
- highlight CursorLine   ctermbg=236
- highlight StatusLineNC ctermbg=238 ctermfg=0
- highlight StatusLine   ctermbg=240 ctermfg=12
+ highlight LineNr       ctermbg=grey ctermfg=black
+ highlight CursorLineNr ctermbg=grey ctermfg=black
+ highlight CursorLine   ctermbg=black
+ highlight StatusLineNC ctermbg=green ctermfg=white
+ highlight StatusLine   ctermbg=green ctermfg=white
  highlight IncSearch    ctermbg=0   ctermfg=3
  highlight Search       ctermbg=0   ctermfg=9
  highlight Visual       ctermbg=3   ctermfg=0
  highlight Pmenu        ctermbg=240 ctermfg=12
  highlight PmenuSel     ctermbg=0   ctermfg=3
 
-" Adding some useful remaps
+"}}}
+"}}}
+" Disable annoying Keys like F1, Tab and stuff"{{{
  " unmap F1 help
-nmap <F1> :echo<CR>
-imap <F1> <C-o>:echo<CR>
+nmap <F1> :echo "Unmapped F1 Key !"<CR>
+imap <F1> <C-o>:echo "Unmapped F1 Key !"<CR>
 
+nnoremap <tab> %
+vnoremap <tab> %
+" Save on lost focus
+au FocusLost * :wa
 
+inoremap jk <ESC>
+"}}}
+" Search Settings"{{{
 nnoremap / /\v
 vnoremap / /\v
 set ignorecase
@@ -83,28 +101,27 @@ set incsearch
 set showmatch
 set hlsearch
 nnoremap <leader><space> :noh<cr>
-nnoremap <tab> %
-vnoremap <tab> %
-inoremap jk <ESC>
-" Vertical Splitting Windows
-nnoremap <leader>w <C-w>v<C-w>l
+"}}}
+" Window Mangement Functions"{{{
+"Splitting window vertically. Move Right
+nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>c <C-w><C-c>
+nnoremap <leader>h <C-w>s<C-w>j
 " Navigation between vertical splits
-nnoremap <C-h> <C-w>h
 nnoremap <leader><Left> <C-w>h
-noremap <C-j> <C-w>j
 noremap <leader><Down> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 nnoremap <leader><Right> <C-w>l
 
+" Resizing verticals
+nnoremap <leader><C-Left> <C-w>5<
+nnoremap <leader><C-Right> <C-w>5>
+nnoremap <leader><C-Up> <C-w>5k
+nnoremap <leader><C-Down> <C-w>5j
+"}}}
+" Code Completion Settings (General and Java)"{{{
+autocmd FileType java set tags=./tags;/,tags;/
+autocmd FileType java setlocal omnifunc=javacomplete2#Complete
 
-" Save on lost focus
-au FocusLost * :wa
-
-" CtrlP Settings
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/*.jar,*.class     " Linux/MacOSX
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-" NERDTree settings
-map <C-n> :NERDTreeToggle<CR>
+set makeprg=mvn\ clean\ install\ -f\ ./pom.xml
+set errorformat=[ERROR]\ %f:[%l\\,%v]\ %m
+""}}}
