@@ -30,5 +30,31 @@
       (browse-url url)))
 (setq flymd-browser-open-function 'my-flymd-browser-function)
 
+(server-start)
+
+;; Setup of org mode capture files
+
+(setq org-todo-keywords
+      '(
+        (sequence "TODO(t)" "INPROGRESS(p)" "POSTPONED(l)" "|" "DONE(d)" "REJECTED(r)")
+        ))
+
+(custom-set-variables
+ '(org-directory "~/org-files")
+ '(org-agenda-files (list org-directory)))
+
+;; Capture Templates
+(setq org-capture-templates
+      '(
+        ("p" "Protokoll (Daily)" entry (file+olp+datetree "protokoll.org" "Protokoll")
+         "* %? %^{Project} - %^{Jira} %<%H:%M>\n")
+       )
+      )
+
+
+(define-key global-map "\C-cj" 'org-capture-goto-last-stored)
+
+
+
 
 
