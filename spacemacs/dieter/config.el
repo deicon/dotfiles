@@ -47,7 +47,9 @@
 (setq org-capture-templates
       '(
         ("p" "Protokoll (Daily)" entry (file+olp+datetree "protokoll.org" "Protokoll")
-         "* %? %^{Project} - %^{Jira} %<%H:%M>\n")
+         "* %? %^{Project} - %^{Jira} %<%H:%M>\n :PROPERTIES:\n :ENTERED_AT: %l\n :END:\n %i\n")
+        ("t" "Todo" entry (file+headline "tasks.org" "Todos")
+         "* TODO %? %^{Project} - %^{Jira}\n DEADLINE: %^t\n %i\n :PROPERTIES:\n :ENTERED_AT: %l\n :END:\n")
        )
       )
 
