@@ -57,6 +57,7 @@ theme.widget_cpu                                = theme.dir .. "/icons/cpu.png"
 theme.widget_temp                               = theme.dir .. "/icons/temp.png"
 theme.widget_net                                = theme.dir .. "/icons/net.png"
 theme.widget_hdd                                = theme.dir .. "/icons/hdd.png"
+theme.widget_disk                               = theme.dir .. "/icons/disk.png"
 theme.widget_music                              = theme.dir .. "/icons/note.png"
 theme.widget_music_on                           = theme.dir .. "/icons/note_on.png"
 theme.widget_vol                                = theme.dir .. "/icons/vol.png"
@@ -67,7 +68,7 @@ theme.widget_mail                               = theme.dir .. "/icons/mail.png"
 theme.widget_mail_on                            = theme.dir .. "/icons/mail_on.png"
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
-theme.useless_gap                               = 0
+theme.useless_gap                               = 10
 theme.titlebar_close_button_focus               = theme.dir .. "/icons/titlebar/close_focus.png"
 theme.titlebar_close_button_normal              = theme.dir .. "/icons/titlebar/close_normal.png"
 theme.titlebar_ontop_button_focus_active        = theme.dir .. "/icons/titlebar/ontop_focus_active.png"
@@ -92,6 +93,7 @@ local separators = lain.util.separators
 
 local mail         = "thunderbird"
 local filemanager  = "nemo"
+local software     = "gnome-software"
 
 -- Textclock
 local clockicon = wibox.widget.imagebox(theme.widget_clock)
@@ -116,7 +118,7 @@ theme.cal = lain.widget.cal({
 local mailicon = wibox.widget.imagebox(theme.widget_mail)
 --[[ commented because it needs to be set before use
 --]]
-mailicon:buttons(my_table.join(awful.button({ modkey }, 1, function () awful.spawn("thunderbird") end)))
+mailicon:buttons(my_table.join(awful.button({ }, 1, function () awful.spawn("thunderbird") end)))
 theme.mail = lain.widget.imap({
     timeout  = 180,
     server   = "imap.1und1.com",
@@ -134,10 +136,19 @@ theme.mail = lain.widget.imap({
 })
 
 
+-- packages widget. Displaying Installed and upgradable packages
+local pkgicon = wibox.widget.imagebox(theme.widget_disk)
+pkgicon:buttons(
+    my_table.join(       
+        awful.button({}, 2, function() awful.spawn(awful.util.terminal .. "sudo apt-get upgrade") end)
+))
+local pkgs = awful.widget.watch('bash -c "~/.config/awesome/checkpackages.sh"', 15)
+-- packages 
+
 -- / fs
 local fsicon = wibox.widget.imagebox(theme.widget_hdd)
 fsicon:buttons(my_table.join(awful.button({ }, 1, function() awful.spawn(filemanager) end)))
---[[ commented because it needs Gio/Glib >= 2.54
+--[[ commented because it needs Gio/Glib >= 2widget_net.54
 --]]
 theme.fs = lain.widget.fs({
     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
@@ -208,9 +219,6 @@ local temp = lain.widget.temp({
         widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
     end
 })
-
-
-
 
 -- Battery
 local baticon = wibox.widget.imagebox(theme.widget_battery)
@@ -302,6 +310,8 @@ function theme.at_screen_connect(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 18, bg = theme.bg_normal, fg = theme.fg_normal })
 
+
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -320,6 +330,9 @@ function theme.at_screen_connect(s)
             arrl_ld,
             wibox.container.background(mpdicon, theme.bg_focus),
             wibox.container.background(theme.mpd.widget, theme.bg_focus),
+            arrl_dl,
+            pkgicon,
+            wibox.container.background(pkgs, theme.bg_focus),
             arrl_dl,
             volicon,
             theme.volume.widget,

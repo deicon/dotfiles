@@ -88,7 +88,7 @@ local themes = {
 local chosen_theme = themes[7]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "gnome-terminal --hide-menubar"
+local terminal     = "gnome-terminal --hide-menubar -- "
 local editor       = os.getenv("EDITOR") or "vim"
 local gui_editor   = "emacs"
 local browser      = "firefox"
@@ -193,7 +193,7 @@ beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv
 local myawesomemenu = {
     { "hotkeys", function() return false, hotkeys_popup.show_help end },
     { "manual", terminal .. " -e man awesome" },
-    { "edit config", string.format("%s -e %s %s", terminal, editor, awesome.conffile) },
+    { "edit config", string.format("%s %s %s", terminal, editor, awesome.conffile) },
     { "restart", awesome.restart },
     { "quit", function() awesome.quit() end }
 }
@@ -670,8 +670,13 @@ awful.rules.rules = {
       properties = { titlebars_enabled = true } },
 
     -- Set Firefox to always map on the first tag on screen 1.
+    -- screen = 1
     { rule = { class = "Firefox" },
-      properties = { screen = 1, tag = awful.util.tagnames[1] } },
+      properties = { tag = awful.util.tagnames[1] } },
+
+    { rule = { class = "Chrome" }, 
+      properties = { tag = awful.util.tagnames[5] }},
+
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized = true } },
@@ -759,6 +764,11 @@ end
 client.connect_signal("property::maximized", border_adjust)
 client.connect_signal("focus", border_adjust)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- autostart script 
+local autStartCommand = "~/.config/awesome/secondMonitor.sh"
+awful.spawn.easy_async_with_shell(autStartCommand, function() 
+end)
 
 -- possible workaround for tag preservation when switching back to default screen:
 -- https://github.com/lcpz/awesome-copycats/issues/251
