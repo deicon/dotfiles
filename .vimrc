@@ -107,7 +107,7 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>c <C-w><C-c>
 nnoremap <leader>h <C-w>s<C-w>j
-" Navigation between vertical splits
+"avigation between vertical splits
 nnoremap <leader><Left> <C-w>h
 noremap <leader><Down> <C-w>j
 nnoremap <leader><Right> <C-w>l
