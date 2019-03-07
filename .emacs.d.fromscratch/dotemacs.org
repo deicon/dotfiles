@@ -1,0 +1,13 @@
+:STARTUP: overview
+
+* OrgMode Extensions
+  Extending the Org Mode Settings
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'org-bullets-mode)
+)
+#+END_SRC
+
+

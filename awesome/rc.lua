@@ -104,6 +104,7 @@ awful.layout.layouts = {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
     awful.layout.suit.floating,
+    lain.layout.centerwork,
     --awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
     --awful.layout.suit.spiral,
@@ -111,16 +112,16 @@ awful.layout.layouts = {
     --awful.layout.suit.max,
     --awful.layout.suit.max.fullscreen,
      awful.layout.suit.magnifier,
+    awful.layout.suit.magnifier,
     --awful.layout.suit.corner.nw,
-    --awful.layout.suit.corner.ne,
+    awful.layout.suit.corner.ne
     --awful.layout.suit.corner.sw,
     --awful.layout.suit.corner.se,
     --lain.layout.cascade,
     --lain.layout.cascade.tile,
-    --lain.layout.centerwork,
     --lain.layout.centerwork.horizontal,
     --lain.layout.termfair,
-    --lain.layout.termfair.center,
+    --lain.layout.termfair.center
 }
 
 awful.util.taglist_buttons = my_table.join(
@@ -247,8 +248,9 @@ globalkeys = my_table.join(
               {description = "take a screenshot", group = "hotkeys"}),
 
     -- X screen locker
-    awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
-              {description = "lock screen", group = "hotkeys"}),
+
+    --awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
+    --          {description = "lock screen", group = "hotkeys"}),
 
     -- Hotkeys
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
