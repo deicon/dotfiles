@@ -1,0 +1,3 @@
+[submodule ".emacs.d.fromscratch/evil"]
+	path = .emacs.d.fromscratch/evil
+	url = https://github.com/emacs-evil/evil.git
