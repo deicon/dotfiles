@@ -25,6 +25,7 @@
 (projectile-mode +1)
 #+END_SRC
 ** OrgMode Extensions
+*** Org Bullets
   Display nicer looking UTF8 based Bullets instead
   of the simple Org-mode stars
 #+BEGIN_SRC emacs-lisp
@@ -33,12 +34,39 @@
     :config
     (add-hook 'org-mode-hook 'org-bullets-mode)
 )
-
-
 #+END_SRC
+*** Org File locations
+   #+BEGIN_SRC emacs-lisp
+          (custom-set-variables
+           '(org-directory "~/Dropbox/deicon/20. Orgfiles")
+           '(org-default-notes-file (concat org-directory "/notes.org"))
+           '(org-export-html-postamble nil)
+           '(org-hide-leading-stars t)
+           '(org-startup-folded (quote overview))
+           '(org-startup-indented t)
+           )
 
+     (global-set-key "\C-ca" 'org-agenda)
 
-ini
+     (setq org-agenda-files (list "~/Dropbox/Deicon/20. Orgfiles/schedule.org"
+                                  "~/Dropbox/Deicon/20. Orgfiles/ideas.org"))
+                                  "~/Dropbox/Deicon/20. Orgfiles/links.org"))
+  #+END_SRC 
+*** Org Capture Templates
+    Some capture Templates
+    #+BEGIN_SRC emacs-lisp
+            (setq org-capture-templates
+                  '(
+                    ("t" "TODO" entry (file+headline "~/Dropbox/Deicon/20. Orgfiles/notes.org" "Neue Todos")
+                     "* TODO %?\n %i\n %a")
+                    ("l" "Link" entry (file+headline "~/Dropbox/Deicon/20. Orgfiles/links.org" "Neuer Link")
+                     "* %? %^L %^g \n%T" :prepend t)
+                    )
+                 ) 
+
+            (global-set-key "\C-cc" 'org-capture)
+    #+END_SRC
+    
 ** Avy Search jump by charachter
 #+BEGIN_SRC emacs-lisp
   (use-package avy
@@ -101,10 +129,43 @@ ini
   (setq web-mode-enable-auto-closing t)
 #+END_SRC
 ** Helm Narrowing Framework
-   Massive Narrowing all over emacs
-   #+BEGIN_SRC emacs-lisp
+Massive Narrowing all over emacs
+#+BEGIN_SRC emacs-lisp
      (use-package helm-projectile
        :ensure t
        )
 #+END_SRC
    
+** Misc Key bindings
+ - Show Recent open files
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key "\C-ce" 'recentf-open-files)
+#+END_SRC
+
+ - Open ibuffer instaed of buffer list
+
+#+BEGIN_SRC emacs-lisp
+   (global-set-key "\C-xb" 'ibuffer)
+#+END_SRC
+
+- Show Parentesis
+  
+#+BEGIN_SRC emacs-lisp
+
+(show-paren-mode)
+
+#+END_SRC
+ 
+** Git MAGIT
+Basically GIT interactive mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    )
+(global-set-key (kbd "C-x g") 'magit-status)
+#+END_SRC
+
+#+RESULTS:
+
