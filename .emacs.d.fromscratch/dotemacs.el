@@ -8,8 +8,15 @@
   )
 
 (use-package projectile
-  :ensure t
-  )
+    :ensure t
+    :config
+    (progn
+       (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+       (define-key projectile-mode-map (kbd "M-n") 'projectile-find-file)
+      )
+    )
+(projectile-mode +1)
 
 (use-package org-bullets
     :ensure t
@@ -48,4 +55,15 @@
   :ensure t
   :config
   (add-hook 'after-init-hook 'global-company-mode)(add-hook 'after-init-hook 'global-company-mode)
+  )
+
+(use-package web-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  )
+(setq web-mode-enable-auto-closing t)
+
+(use-package helm-projectile
+  :ensure t
   )

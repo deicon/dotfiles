@@ -33,7 +33,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (undo-tree org-bullet which-key use-package try org-plus-contrib org-bullets flycheck evil delight counsel company auto-complete))))
+    (web-mode undo-tree org-bullet which-key use-package try org-plus-contrib org-bullets flycheck evil delight counsel company auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
