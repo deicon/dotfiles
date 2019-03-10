@@ -1,2 +1,6 @@
 elpa
 *~
+/.emacs.d.fromscratch/eshell/history
+/.emacs.d.fromscratch/eshell/lastdir
+/.emacs.d.fromscratch/transient/history.el
+dotemacs.el

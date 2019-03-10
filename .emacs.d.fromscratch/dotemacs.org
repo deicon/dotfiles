@@ -1,6 +1,32 @@
 :STARTUP: overview
 
 * Extended and commented Emacs Configuration
+
+** GUI Adjustments
+
+*** Adjust gui to make it simplistic
+#+BEGIN_SRC emacs-lisp
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (tool-bar-mode -1)
+#+END_SRC
+
+*** Zenburm light theme
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :ensure t)
+
+  (use-package anti-zenburn-theme
+    :ensure t)
+
+#+END_SRC
+
+*** Solarized Dark and Light
+#+BEGIN_SRC emacs-lisp
+  (use-package solarized-theme
+    :ensure t)
+
+#+END_SRC
 ** Flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
@@ -13,16 +39,23 @@
 #+END_SRC
 ** Project Management using Projectile
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t
-    :config
-    (progn
-       (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-       (define-key projectile-mode-map (kbd "M-n") 'projectile-find-file)
+          (use-package projectile
+            :ensure t
+            :config
+            (progn
+               (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+               (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+               (define-key projectile-mode-map (kbd "M-n") 'projectile-find-file)
+               (recentf-mode)
+              )
+            )
+        (projectile-mode +1)
+
+    (use-package neotree
+      :ensure t 
+      :bind (("<f8>" . neotree-toggle))
       )
-    )
-(projectile-mode +1)
+
 #+END_SRC
 ** OrgMode Extensions
 *** Org Bullets
@@ -49,8 +82,9 @@
      (global-set-key "\C-ca" 'org-agenda)
 
      (setq org-agenda-files (list "~/Dropbox/Deicon/20. Orgfiles/schedule.org"
-                                  "~/Dropbox/Deicon/20. Orgfiles/ideas.org"))
+                                  "~/Dropbox/Deicon/20. Orgfiles/ideas.org"
                                   "~/Dropbox/Deicon/20. Orgfiles/links.org"))
+
   #+END_SRC 
 *** Org Capture Templates
     Some capture Templates
@@ -149,12 +183,10 @@ Massive Narrowing all over emacs
    (global-set-key "\C-xb" 'ibuffer)
 #+END_SRC
 
-- Show Parentesis
+- Show Parenthesis
   
 #+BEGIN_SRC emacs-lisp
-
-(show-paren-mode)
-
+  (show-paren-mode)
 #+END_SRC
  
 ** Git MAGIT
@@ -169,3 +201,24 @@ Basically GIT interactive mode
 
 #+RESULTS:
 
+** Plantuml in OrgMode
+Adding features to support Plantuml 
+
+#+BEGIN_SRC emacs-lisp
+  (use-package plantuml-mode
+    :ensure t
+        )
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;; active Org-babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(;; other Babel languages
+     (plantuml . t)))
+
+  (setq org-plantuml-jar-path
+        (expand-file-name "~/plantuml.jar")
+        )
+#+END_SRC
