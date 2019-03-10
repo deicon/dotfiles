@@ -1,1 +1,1 @@
-("~/projects/organize/" "~/projects/dotfiles/" "~/projects/yatf/")
+("~/projects/dotfiles/" "~/projects/organize/" "~/projects/yatf/")
