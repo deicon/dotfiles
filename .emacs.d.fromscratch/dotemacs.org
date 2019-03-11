@@ -55,6 +55,18 @@
       )
 
 #+END_SRC
+** Which Key configuration
+  Adding Feature which describes each possible 
+  Key command
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :config
+    (progn
+      (which-key-mode)    
+      ))
+
+#+END_SRC
 ** OrgMode Extensions
 *** Org Bullets
   Display nicer looking UTF8 based Bullets instead
@@ -98,24 +110,23 @@
 
             (global-set-key "\C-cc" 'org-capture)
     #+END_SRC
+** WebMode configuration
+   Some HTML Helper Stuff
+
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :ensure t
+    :config
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    )
+  (setq web-mode-enable-auto-closing t)
+#+END_SRC
     
 ** Avy Search jump by charachter
 #+BEGIN_SRC emacs-lisp
   (use-package avy
     :ensure t
     :bind ("M-s" . avy-goto-char))
-#+END_SRC
-** Which Key configuration
-  Adding Feature which describes each possible 
-  Key command
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :ensure t
-    :config
-    (progn
-      (which-key-mode)    
-      ))
-
 #+END_SRC
 ** Swiper and Counel Search Provider
   Simple Search Replacement allowing for regexp
@@ -148,17 +159,6 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode)(add-hook 'after-init-hook 'global-company-mode)
   )
-#+END_SRC
-** WebMode configuration
-   Some HTML Helper Stuff
-
-#+BEGIN_SRC emacs-lisp
-  (use-package web-mode
-    :ensure t
-    :config
-    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-    )
-  (setq web-mode-enable-auto-closing t)
 #+END_SRC
 ** Helm Narrowing Framework
 Massive Narrowing all over emacs
@@ -222,5 +222,6 @@ Adding features to support Plantuml
   (setq org-plantuml-jar-path
         (expand-file-name "~/plantuml.jar")
         )
+(global-set-key (kbd "<f1>") 'org-toggle-inline-images)
 
 #+END_SRC
