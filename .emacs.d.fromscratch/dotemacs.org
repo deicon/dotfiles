@@ -1,4 +1,4 @@
-:STARTUP: overview
+:STARTUP:  overview
 
 * Extended and commented Emacs Configuration
 

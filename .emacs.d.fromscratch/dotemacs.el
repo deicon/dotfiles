@@ -125,10 +125,13 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 (use-package plantuml-mode
-  :ensure t
-      )
+    :ensure t
+        )
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
 
 ;; active Org-babel languages
+
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages

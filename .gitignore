@@ -5,3 +5,4 @@ elpa
 /.emacs.d.fromscratch/transient/history.el
 dotemacs.el
 *.eld
+dotemacs.el
