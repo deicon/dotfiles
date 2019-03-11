@@ -1,5 +1,3 @@
-:STARTUP:  overview
-
 * Extended and commented Emacs Configuration
 
 ** GUI Adjustments
