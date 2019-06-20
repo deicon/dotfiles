@@ -42,7 +42,7 @@
  '(org-startup-indented t)
  '(package-selected-packages
    (quote
-    (plantuml-mode anti-zenburn-theme solarized-theme zenburn-theme neotree treemacs treemacs-projectile magit web-mode undo-tree org-bullet which-key use-package try org-plus-contrib org-bullets flycheck evil delight counsel company auto-complete)))
+    (markdown-mode adoc-mode lua-mode plantuml-mode anti-zenburn-theme solarized-theme zenburn-theme neotree treemacs treemacs-projectile magit web-mode undo-tree org-bullet which-key use-package try org-plus-contrib org-bullets flycheck evil delight counsel company auto-complete)))
  '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

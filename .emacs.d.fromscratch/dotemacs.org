@@ -1,6 +1,6 @@
-:STARTUP: overview
+:STARTUP:  overview
 
-* Extended and commented Emacs Configuration
+* Extended and commented Emacs Configuratyion
 
 ** GUI Adjustments
 
@@ -201,6 +201,14 @@ Basically GIT interactive mode
 
 #+RESULTS:
 
+** LUA Mode
+Adding Syntax Highlighting for LUA
+#+BEGIN_SRC emacs-lisp
+  (use-package lua-mode
+              :ensure t
+              :config
+              (lua-mode))
+#+END_SRC
 ** Plantuml in OrgMode
 Adding features to support Plantuml 
 
@@ -226,3 +234,19 @@ Adding features to support Plantuml
         )
 
 #+END_SRC
+** Asciidoc 
+Adding Support for Asciidoc Documents
+#+BEGIN_SRC emacs-lisp
+(use-package adoc-mode
+:ensure t)
+(add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode))
+
+#+END_SRC
+** Markdown Mode
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))

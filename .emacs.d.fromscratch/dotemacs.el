@@ -124,11 +124,19 @@
     )
 (global-set-key (kbd "C-x g") 'magit-status)
 
+(use-package lua-mode
+            :ensure t
+            :config
+            (lua-mode))
+
 (use-package plantuml-mode
-  :ensure t
-      )
+    :ensure t
+        )
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
 
 ;; active Org-babel languages
+
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
@@ -137,3 +145,7 @@
 (setq org-plantuml-jar-path
       (expand-file-name "~/plantuml.jar")
       )
+
+(use-package adoc-mode
+:ensure t)
+(add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode))
