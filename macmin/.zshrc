@@ -1,5 +1,13 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH:$HOME/dev/tools/flutter/bin
+export GOPATH=$HOME/dev/projects/go
+export PATH=$HOME/bin:/usr/local/bin:$PATH:$HOME/dev/tools/flutter/bin:$HOME/dev/tools/apache-maven-3.6.3/bin:$GOPATH/bin
+
+export ANDROID_HOME=/Users/dieter/Library/Android/sdk 
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH/:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$HOME/.pub-cache/bin
+
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/dieter/.oh-my-zsh"
@@ -68,7 +76,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,6 +108,12 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+bindkey '^ ' autosuggest-accept
+
 alias v=vim
 alias ezsh="vim ~/.zshrc"
 alias t=tmuxinator
+source ~/.aliases
+source ~/.kubectlzsh
+alias k="kubectl --kubeconfig=/Users/dieter/dev/projects/ey/MikroKubernetes/multipassImages/kubeconfig"
+KUBECONFIG=$HOME/dev/projects/ey/kubernetes/config_aks_develop
