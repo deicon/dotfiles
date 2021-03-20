@@ -1,5 +1,13 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 export GOPATH=$HOME/dev/projects/go
+export GO111MODULE="on"
 export PATH=$HOME/bin:/usr/local/bin:$PATH:$HOME/dev/tools/flutter/bin:$HOME/dev/tools/apache-maven-3.6.3/bin:$GOPATH/bin
 
 export ANDROID_HOME=/Users/dieter/Library/Android/sdk 
@@ -16,7 +24,8 @@ export ZSH="/Users/dieter/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -116,4 +125,15 @@ alias t=tmuxinator
 source ~/.aliases
 source ~/.kubectlzsh
 alias k="kubectl --kubeconfig=/Users/dieter/dev/projects/ey/MikroKubernetes/multipassImages/kubeconfig"
-KUBECONFIG=$HOME/dev/projects/ey/kubernetes/config_aks_develop
+KUBECONFIG_old=$HOME/dev/projects/ey/kubernetes/config_aks_develop
+KUBECONFIG=$HOME/dev/projects/ey/kubernetes/config_aks_fivezero
+alias k9="KUBECONFIG=$KUBECONFIG k9s -n dataroom-poc --context dataroom-aks-develop"
+alias k9old="KUBECONFIG=$KUBECONFIG_old k9s --context dtp-infra-aks-dev"
+alias k9deicon="KUBECONFIG=$HOME/dev/projects/deicon/Kubernetes/K8S-DEV-kubeconfig.yaml k9s"
+
+
+eval $(thefuck --alias)
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export PATH="/usr/local/opt/postgresql@11/bin:$PATH"

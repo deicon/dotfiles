@@ -183,12 +183,12 @@ let g:lsc_auto_map = {
 "    \ 'PreviousReference': '<C-p>',
 
 " Next Ruffer
-map <leader>y :bn<cr>
+map <leader>z :bn<cr>
 " Prev Buffer
 map <leader>x :bp<cr>
 " Delete Ruffer 
 map <leader>d :bd<cr>
-" List of all Buffers
+" List of all uffers
 map <leader>e :CtrlPMixed<cr>
 
 
@@ -287,3 +287,5 @@ nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
 
 nnoremap <leader>lt :NERDTreeFind<cr>
+
+source ~/.cocflutterrc
