@@ -1,0 +1,29 @@
+
+alias v=nvim
+alias ezsh="vim ~/.zshrc"
+alias t=tmuxinator
+alias c="code ."
+alias f="fork ."
+
+
+alias gcb="\$(git checkout \$(git branch -l | grep -v '[*]' | fzf))"
+alias gcbr="\$(git checkout -t \$(git branch -lr | grep -v '[*]' | fzf))"
+alias vdr="open zoommtg://zoom.us/start\?action=join\&confno=407869354a"
+alias dlog="~/.dlogg.sh"
+alias kimgs="docker exec -it dev-control-plane crictl images"
+alias kclust="kind get clusters"
+alias kload="kind load docker-image"
+alias lspv="vim \$(fzf --preview 'cat {}')"
+alias pod="arch -x86_64 pod"
+
+alias panshell=/Users/dieter/dev/projects/deicon/docker_container/pandoc/panshell.sh
+alias vim=nvim
+
+## KUBECTL Aliases
+export KUBECONFIG_50=/Users/dieter/dev/projects/ey/kubernetes/config_aks_fivezero_all
+export KUBECONFIG_DEICON=/Users/dieter/dev/projects/deicon/kubernetes/DeiconDev-kubeconfig.yaml
+alias k9dev="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-dev-aks -n dataroom"
+alias k9uat="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-uat-aks -n dataroom"
+alias k9prod="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-prd-aks -n dataroom"
+alias k9dvagint="k9s --context aks-integration01-int --namespace integration-vertragsabschluss"
+alias k9deicon="KUBECONFIG=/Users/dieter/dev/projects/deicon/kubernetes/DeiconDev-kubeconfig.yaml k9s" 
