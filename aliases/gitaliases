@@ -1,0 +1,12 @@
+
+## GIT Aliases
+alias gs="git status"
+alias gf="git show --stat --oneline "
+alias gp="git push"
+alias gpp="\$(git push 2>&1 | awk '/git/ {print \$0;}')"
+alias gd="git diff"
+alias gg="git grep"
+alias gll="git log --graph --oneline --pretty=format:'Author: %aN, Date: %aD %d'"
+alias gl="git log --graph"
+alias gcleanbranches='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
+
