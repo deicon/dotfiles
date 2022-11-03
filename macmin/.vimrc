@@ -5,11 +5,9 @@ let mapleader = ","
 let localleader = "-"
 
 
-
-
-" Quickly edit .vimrc {{{
+" Quickly edit .rc {{{
 nnoremap <silent><leader>ev :vsplit $HOME/.vimrc<CR>:set foldmethod=marker<cr>:set foldlevel=0<cr>
-nnoremap <leader>sv :source $HOME/.vimrc<CR>  
+nnoremap <leader>sv :luafile ~/.config/nvim/init.vim<CR>  
 "}}}
 " Global GUI Settings"{{{
 set tabstop=4
@@ -45,7 +43,7 @@ set modelines=0
 set guioptions-=T " No Toolbar
 set guioptions-=m " No Menubar
 inoremap jk <ESC>
-   
+  
 set background=dark
 colorscheme desert
 
@@ -142,8 +140,7 @@ nnoremap <leader>fD :FlutterVisualDebug<cr>
 
 Plug 'natebosch/vim-lsc'
 Plug 'natebosch/vim-lsc-dart'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+"Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'ctrlpvim/ctrlp.vim'
 
 " Initialize plugin system
@@ -205,7 +202,7 @@ nnoremap <leader>F [m
 "}}} 
 
 " NERTree Commands {{{
-nnoremap <C-n> :NERDTreeToggle<cr>
+nnoremap <leader>t :NERDTreeToggle<cr>
 " }}}
 
 " Coc Snippets {{{
@@ -275,6 +272,8 @@ let g:ctrlp_custom_ignore = {
 
 " Use the nearest .git directory as the cwd
 " This makes a lot of sense if you are working on a project that is in version
+    /opt/homebrew/bin/python3.10 does not have the "neovim" module.
+    /opt/homebrew/bin/python3.9 does not have the "neovim" module.
 " control. It also supports works with .svn, .hg, .bzr.
 let g:ctrlp_working_path_mode = 'r'
 
@@ -288,4 +287,3 @@ nmap <leader>bs :CtrlPMRU<cr>
 
 nnoremap <leader>lt :NERDTreeFind<cr>
 
-source ~/.cocflutterrc
