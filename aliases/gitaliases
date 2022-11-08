@@ -10,3 +10,29 @@ alias gll="git log --graph --oneline --pretty=format:'Author: %aN, Date: %aD %d'
 alias gl="git log --graph"
 alias gcleanbranches='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
 
+## branch creation
+
+gcreate() {
+    LASTBRANCHNAME=$(cat ~/.config/.lastbranchname) 
+    LASTISSUE=$(cat ~/.config/.lastissue) 
+    type=$(gum choose "feature" "refactor" "bugfix" "chore")
+	issue=$(gum input --value "$LASTISSUE" --prompt "IssueID> ")
+	echo $issue > ~/.config/.lastissue
+	if [ "$1" = "b" ]; then
+		name=$(gum input --value "$LASTBRANCHNAME" --prompt "> " --placeholder "Branch Name/Description")
+		echo $name > ~/.config/.lastbranchname 
+		branchName="${type}/${issue:-}/$name"
+		git checkout -b "${branchName//\ /_}"
+	fi
+	if [ "$1" = "c" ]; then
+	    LASTMESSAGE=$(cat ~/.config/.lastcommitmessage)
+		message=$(gum write --value "$LASTMESSAGE" --prompt "Commit Message> ")
+		messagePrefix="${type}(${issue:-})"
+	    echo "$message " > ~/.config/.lastcommitmessage
+	    echo "${messagePrefix//\ /_}: $message " > ~/.config/.cmMessage
+		cat ~/.config/.lastcommitmessage
+		git commit -aF ~/.config/.cmMessage && rm ~/.config/.cmMessage 
+	fi
+
+}
+

@@ -31,6 +31,12 @@ au FocusLost * :wa
 
 " }}}
 
+" NETRW Settings {{{
+ let g:netrw_banner=1
+ let g:netrw_liststyle=0
+ let g:netrw_browse_split=4 " reuse last window
+
+" }}}
 " Plugins {{{
 call plug#begin()
 
@@ -38,20 +44,19 @@ Plug 'https://github.com/preservim/nerdtree' " NerdTree
 Plug 'https://github.com/vim-airline/vim-airline' " Status bar
 Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme
 Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
-Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
 Plug 'https://github.com/dart-lang/dart-vim-plugin' " 
-Plug 'https://github.com/thosakwe/vim-flutter'
-Plug 'https://github.com/natebosch/vim-lsc'
-Plug 'https://github.com/natebosch/vim-lsc-dart'
+Plug 'https://github.com/neovim/nvim-lspconfig'
 Plug 'https://github.com/kien/ctrlp.vim'
 Plug 'https://github.com/fatih/vim-go', { 'do': ':GoUpdateBinaries' } 
 
+ Plug 'https://github.com/majutsushi/tagbar' " Tag in sidebar
+ Plug 'https://github.com/majutsushi/tagbar' " Tag in sidebar
 set encoding=UTF-8
 
 call plug#end()
-" }}} 
+" }}} zo
 
 " Nerdtree Setup {{{
 nnoremap <C-f> :NERDTreeFocus<CR>
@@ -90,7 +95,7 @@ nnoremap <leader><C-Down> <C-w>5j
 "}}}
 nmap <F8> :TagbarToggle<CR>
 
-:set completeopt-=preview " For No Previews
+":set completeopt-=preview " For No Previews
 
 :colorscheme jellybeans
 
@@ -115,3 +120,11 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
+
+" Golang LSP Support {{{
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+nnoremap <leader><C-g> :GoLint<CR>
+
+" }}} 
