@@ -15,7 +15,7 @@ alias gcleanbranches='git branch --no-color --merged | command grep -vE "^(\+|\*
 gcreate() {
     LASTBRANCHNAME=$(cat ~/.config/.lastbranchname) 
     LASTISSUE=$(cat ~/.config/.lastissue) 
-    type=$(gum choose "feature" "refactor" "bugfix" "chore")
+    type=$(gum choose --allow-input "feature" "refactor" "bugfix" "chore")
 	issue=$(gum input --value "$LASTISSUE" --prompt "IssueID> ")
 	echo $issue > ~/.config/.lastissue
 	if [ "$1" = "b" ]; then

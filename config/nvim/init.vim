@@ -1,9 +1,9 @@
-
 let mapleader=","
 let localleader="-"
 " Quickly edit .rc {{{
-nnoremap <silent><leader>ev :vsplit $HOME/.config/nvim/init.vim<CR>:set foldmethod=marker<cr>:set foldlevel=0<cr>
-nnoremap <leader>sv :source $HOME/.config/nvim/init.vim<CR>  
+nnoremap <silent><leader>ev :vsplit $HOME/.config/nvim/init.cim<CR>:set foldmethod=marker<cr>:set foldlevel=0<cr>
+nnoremap <leader>sv :source $HOME/.config/nvim/init.cim<CR>  
+nnoremap <silent><leader>el :vsplit $HOME/.config/nvim/init.lua<CR>:set foldmethod=marker<cr>:set foldlevel=0<cr>
 "}}}
 
 " Text display Setup {{{
@@ -50,9 +50,34 @@ Plug 'https://github.com/dart-lang/dart-vim-plugin' "
 Plug 'https://github.com/neovim/nvim-lspconfig'
 Plug 'https://github.com/kien/ctrlp.vim'
 Plug 'https://github.com/fatih/vim-go', { 'do': ':GoUpdateBinaries' } 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
+" Completion setup
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
 
- Plug 'https://github.com/majutsushi/tagbar' " Tag in sidebar
- Plug 'https://github.com/majutsushi/tagbar' " Tag in sidebar
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' } 
+Plug 'https://github.com/majutsushi/tagbar' " Tag in sidebar
+Plug 'https://github.com/majutsushi/tagbar' " Tag in sidebar
+Plug 'nvim-telescope/telescope-github.nvim'
+
+" Debugging
+Plug 'https://github.com/mfussenegger/nvim-dap'
+Plug 'https://github.com/rcarriga/nvim-dap-ui'
+Plug 'https://github.com/leoluz/nvim-dap-go'
+Plug 'https://github.com/theHamsta/nvim-dap-virtual-text'
+Plug 'https://github.com/nvim-telescope/telescope-dap.nvim'
+
+" Kotlin
+Plug 'udalov/kotlin-vim'
+
+ " Motions
+ Plug 'phaazon/hop.nvim'
 set encoding=UTF-8
 
 call plug#end()
@@ -61,7 +86,6 @@ call plug#end()
 " Nerdtree Setup {{{
 nnoremap <C-f> :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
 " }}}
 
 
@@ -119,12 +143,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 
-" Golang LSP Support {{{
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
+lua require('dieter')
 
-nnoremap <leader><C-g> :GoLint<CR>
-
-" }}} 
