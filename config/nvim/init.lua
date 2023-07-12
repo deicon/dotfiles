@@ -34,6 +34,7 @@ vim.keymap.set('n', '<leader>fgf', telescope.git_files, {})
 vim.keymap.set('n', '<leader>fgb', telescope.git_branches, {})
 vim.keymap.set('n', '<leader>fgc', telescope.git_commits, {})
 
+vim.keymap.set('n', '<leader>sd', telescope.diagnostics, {})
 vim.keymap.set('n', '<leader>qf', telescope.quickfix, {})
 vim.keymap.set('n', '<leader>qfh', telescope.quickfixhistory, {})
 vim.keymap.set('n', '<leader>fcb', telescope.current_buffer_fuzzy_find, {})

@@ -15,11 +15,12 @@ nnoremap <silent><leader>el :vsplit $HOME/.config/nvim/init.lua<CR>:set foldmeth
 :set smarttab
 :set softtabstop=4
 :set mouse=a
+:set noswapfile
 " }}}
 
 " Global GUI Settings"{{{
 
-inoremap jk <ESC>
+inoremap jk <ESC>:w<cr>
   
 set background=dark
 colorscheme desert
@@ -51,6 +52,7 @@ Plug 'https://github.com/neovim/nvim-lspconfig'
 Plug 'https://github.com/kien/ctrlp.vim'
 Plug 'https://github.com/fatih/vim-go', { 'do': ':GoUpdateBinaries' } 
 Plug 'nvim-lua/plenary.nvim'
+Plug 'simrat39/rust-tools.nvim'
 Plug 'nvim-lua/popup.nvim'
 " Completion setup
 Plug 'hrsh7th/nvim-cmp'
@@ -59,6 +61,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'alx741/vim-rustfmt'
 
 Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' } 

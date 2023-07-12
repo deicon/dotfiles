@@ -5,9 +5,8 @@ alias t=tmuxinator
 alias c="code ."
 alias f="fork ."
 
-
-alias gcb="\$(git checkout \$(git branch -l | grep -v '[*]' | fzf))"
-alias gcbr="\$(git checkout -t \$(git branch -lr | grep -v '[*]' | fzf))"
+alias gcb="git checkout \$(git branch -l | grep -v '[*]' | gum filter)"
+alias gcbr="git checkout -t \$(git branch -lr | grep -v '[*]' | fzf)"
 alias vdr="open zoommtg://zoom.us/start\?action=join\&confno=407869354a"
 alias dlog="~/.dlogg.sh"
 alias kimgs="docker exec -it dev-control-plane crictl images"
@@ -26,4 +25,5 @@ alias k9dev="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-dev-aks -n dataro
 alias k9uat="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-uat-aks -n dataroom"
 alias k9prod="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-prd-aks -n dataroom"
 alias k9dvagint="k9s --context aks-integration01-int --namespace integration-vertragsabschluss"
-alias k9deicon="KUBECONFIG=/Users/dieter/dev/projects/deicon/kubernetes/DeiconDev-kubeconfig.yaml k9s" 
+alias k9deicon="KUBECONFIG=/Users/dieter/dev/projects/deicon/kubernetes/deicon-do-k8s-kubeconfig.yaml k9s" 
+alias setdeicon="KUBECONFIG=/Users/dieter/dev/projects/deicon/kubernetes/deicon-do-k8s-kubeconfig.yaml"

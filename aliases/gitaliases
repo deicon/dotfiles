@@ -1,4 +1,3 @@
-
 ## GIT Aliases
 alias gs="git status"
 alias gf="git show --stat --oneline "
@@ -11,6 +10,25 @@ alias gl="git log --graph"
 alias gcleanbranches='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
 
 ## branch creation
+
+# browse all branches remote and locals
+gbb() {
+	current=$(git branch --show-current)
+	allLocals=$(git branch -l | grep -v "*") 
+	allRemotes=$(git branch -lr | grep -v $current)
+	allLocals+=(${allRemotes[@]})
+	echo "${allLocals[@]}" | gum filter
+}
+
+# list open prs in github
+#
+ghpr() {
+result=$(gh pr list --json number,title,headRefName,updatedAt --template \
+  	'{{range .}}{{tablerow (printf "#%v" .number | autocolor "green") .title .headRefName (timeago .updatedAt)}}{{end}}')
+	pr=$(echo $result | gum filter)
+	echo $pr | cut -w -f1 | cut -c 2-
+}
+
 
 gcreate() {
     LASTBRANCHNAME=$(cat ~/.config/.lastbranchname) 
