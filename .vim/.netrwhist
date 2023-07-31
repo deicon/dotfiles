@@ -1,7 +1,3 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/Users/dieter/Sites'
-let g:netrw_dirhist_2='/Users/dieter/.vim/bundle/maven-ide/yavdb'
-let g:netrw_dirhist_3='/Development/Workspace/json-webapp'
-let g:netrw_dirhist_4='/Daten/GitRepositories/sellit/info'
-let g:netrw_dirhist_5='/Development/Python/projects/sellit/sellit'
+let g:netrw_dirhistcnt =1
+let g:netrw_dirhist_1='/Users/dietereickstadt/dev/projects/dvag/tarifrechner-referenzimplementierung-frontend'

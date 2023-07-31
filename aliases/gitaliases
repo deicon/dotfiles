@@ -9,6 +9,15 @@ alias gll="git log --graph --oneline --pretty=format:'Author: %aN, Date: %aD %d'
 alias gl="git log --graph"
 alias gcleanbranches='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
 
+alias v=nvim
+alias ezsh="vim ~/.zshrc"
+alias t=tmuxinator
+alias c="code-insiders ."
+alias f="fork ."
+
+alias gcb="git checkout \$(git branch -l | gum filter)"
+alias gcbr="git checkout -t \$(git branch -lr | grep -v '[*]' | fzf)"
+
 ## branch creation
 
 # browse all branches remote and locals
