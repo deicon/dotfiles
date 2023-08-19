@@ -11,6 +11,7 @@ alias gcleanbranches='git branch --no-color --merged | command grep -vE "^(\+|\*
 
 alias v=nvim
 alias ezsh="vim ~/.zshrc"
+alias vzsh="vim ~/.config/nvim/"
 alias t=tmuxinator
 alias c="code-insiders ."
 alias f="fork ."
