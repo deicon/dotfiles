@@ -1,0 +1,11 @@
+gui:
+  theme:
+    selectedLinBgColor:
+      - underline
+    selectedRangeColor:
+      - underline
+
+git: 
+paging:
+  colorArg: never
+  pager: delta --dark --paging=never

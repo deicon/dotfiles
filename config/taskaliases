@@ -1,0 +1,3 @@
+alias tc="task context \$(task _context | gum choose)"
+alias tp="task project \$(task _projects | gum choose)"
+alias t="task"

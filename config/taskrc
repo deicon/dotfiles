@@ -1,0 +1,5 @@
+context.dvag.read=project:webvp
+context.dvag.write=project:webvp
+context.privat.read=project:privat
+context.privat.write=project:privat
+context=privat
