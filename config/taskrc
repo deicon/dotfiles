@@ -1,5 +1,2 @@
-context.dvag.read=project:webvp
-context.dvag.write=project:webvp
-context.privat.read=project:privat
-context.privat.write=project:privat
-context=privat
+data.location=~/dev/projects/deicon/tasks
+context.dvag.read=project:webvp or project:architekur or project:leaddev or project:testing

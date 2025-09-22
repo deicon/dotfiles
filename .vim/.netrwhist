@@ -1,11 +1,12 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =9
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/Users/dietereickstadt/dev/projects/dvag/vp-digital-investment-frontend-wt/feat/WEBVP-25274i-jdbc-parameter-unicode'
+let g:netrw_dirhist_2='/Users/dietereickstadt/dev/projects/dvag/vp-digital-lead-tracking-service/frontend'
+let g:netrw_dirhist_1='/Users/dietereickstadt/dev/projects/dvag/vp-digital-lead-tracking-service/frontend/src'
+let g:netrw_dirhist_0='/Users/dietereickstadt/dev/projects/dvag/vp-digital-lead-tracking-service/frontend'
 let g:netrw_dirhist_9='/Users/dietereickstadt/dev/projects/deicon/dotfiles/aliases'
 let g:netrw_dirhist_8='/Users/dietereickstadt/dev/projects/deicon/dotfiles'
 let g:netrw_dirhist_7='/Users/dietereickstadt/dev/projects/deicon/dotfiles/.vim'
 let g:netrw_dirhist_6='/Users/dietereickstadt/dev/projects/deicon/dotfiles'
 let g:netrw_dirhist_5='/Users/dietereickstadt/dev/projects/deicon'
 let g:netrw_dirhist_4='/Users/dietereickstadt/dev/projects'
-let g:netrw_dirhist_3='/Users/dietereickstadt/dev'
-let g:netrw_dirhist_2='/Users/dietereickstadt'
-let g:netrw_dirhist_1='/Users/dietereickstadt/dev/projects/dvag/tarifrechner-referenzimplementierung-frontend'

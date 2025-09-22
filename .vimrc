@@ -1,6 +1,7 @@
 " Pathogen Plugin Setup"{{{
 "execute pathogen#infect()
 syntax on
+set nocompatible
 "..filetype plugin indent on
 " Pathogen Plugin Setup
 "}}}
@@ -45,6 +46,8 @@ set modelines=0
 " Toolbar options for GVIM
 set guioptions-=T " No Toolbar
 set guioptions-=m " No Menubar
+
+set path+=**
 
 " put useful info in status bar
 " set statusline=%F%m%r%h%w\ [%l,%c]\ %{fugitive#statusline()}\[%L,%p%%]
@@ -125,3 +128,17 @@ autocmd FileType java setlocal omnifunc=javacomplete2#Complete
 set makeprg=mvn\ clean\ install\ -f\ ./pom.xml
 set errorformat=[ERROR]\ %f:[%l\\,%v]\ %m
 ""}}}
+
+
+autocmd BufNewFile,BufRead *.vpm call SetVimPresentationMode()
+function SetVimPresentationMode()
+   nnoremap <buffer> <Right> :n<CR>
+   nnoremap <buffer> <Left> :N<CR>
+
+   if !exists('#goyo')
+      Goyo
+   endif
+endfunction
+
+set swapfile
+set dir=~/tmp

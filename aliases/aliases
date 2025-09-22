@@ -1,19 +1,28 @@
 
 alias v=nvim
 alias ezsh="vim ~/.zshrc"
-alias t=tmuxinator
+alias t=task
 alias c="code ."
 alias f="fork ."
-
+alias prd="git fetch origin && git diff origin/develop...HEAD | pbcopy"
+alias gl="git log --graph --all --pretty=format:'%C(magenta)%h %C(white) %an %ar%C(auto) %D%n%s%n'"
+alias gap="git add --patch"
+alias gds="git diff --staged"
 alias gcb="git checkout \$(git branch -l | grep -v '[*]' | gum filter)"
+alias gcw="cd \$(git worktree list | gum choose | cut -d ' ' -f1)"
+alias gdw="git worktree remove \$(git worktree list | gum choose | cut -d ' ' -f1)"
+alias vpr="gh pr view \$(gh pr list -A @me | gum filter | cut -f1)"
 alias gcbr="git checkout -t \$(git branch -lr | grep -v '[*]' | fzf)"
+alias dcld='docker compose -f \$(gum choose \$(docker compose ls | grep -v STATUS | cut -w -f 3)) down -v'
 alias vdr="open zoommtg://zoom.us/start\?action=join\&confno=407869354a"
-alias dlog="~/.dlogg.sh"
-alias kimgs="docker exec -it dev-control-plane crictl images"
-alias kclust="kind get clusters"
-alias kload="kind load docker-image"
+alias dlog="docker logs -f \$(echo \$(docker ps --format \"table {{.ID}},{{.Names}}\" |grep -v CONTAINER |  gum choose)| cut -d \",\" -f 1)"
 alias lspv="vim \$(fzf --preview 'cat {}')"
 alias pod="arch -x86_64 pod"
+alias kcs="kubectx \$(kubectl config get-contexts -oname| gum choose)"
+alias kns="export KUBE_NS=\$(kubens | grep -Ff $HOME/.config/namespaces |sort| gum choose --height 15 --selected \"investmentanlage\") && kubectl config set-context --current --namespace=\${KUBE_NS}"
+alias kk="kubectl --context aks-\${KUBE_STAGE}01-\${KUBE_STAGE_SUFFIX/o/d} --namespace \${KUBE_STAGE}-\${KUBE_NS}"
+alias kl="kubectl --context aks-\${KUBE_STAGE}01-\${KUBE_STAGE_SUFFIX/o/d} --namespace \${KUBE_STAGE}-\${KUBE_NS} logs -f \$(kk get pods -o name --no-headers=true| gum choose)"
+alias kls="kubectl --context aks-\${KUBE_STAGE}01-\${KUBE_STAGE_SUFFIX/o/d} --namespace \${KUBE_STAGE}-\${KUBE_NS} logs -f \$(kk get services -o name --no-headers=true| gum choose)"
 
 alias panshell=/Users/dieter/dev/projects/deicon/docker_container/pandoc/panshell.sh
 alias vim=nvim
@@ -21,9 +30,18 @@ alias vim=nvim
 ## KUBECTL Aliases
 export KUBECONFIG_50=/Users/dieter/dev/projects/ey/kubernetes/config_aks_fivezero_all
 export KUBECONFIG_DEICON=/Users/dieter/dev/projects/deicon/kubernetes/DeiconDev-kubeconfig.yaml
-alias k9dev="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-dev-aks -n dataroom"
-alias k9uat="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-uat-aks -n dataroom"
-alias k9prod="KUBECONFIG=$KUBECONFIG_50 k9s --context dtp-infra-prd-aks -n dataroom"
 alias k9dvagint="k9s --context aks-integration01-int --namespace integration-vertragsabschluss"
-alias k9deicon="KUBECONFIG=/Users/dieter/dev/projects/deicon/kubernetes/deicon-do-k8s-kubeconfig.yaml k9s" 
-alias setdeicon="KUBECONFIG=/Users/dieter/dev/projects/deicon/kubernetes/deicon-do-k8s-kubeconfig.yaml"
+
+alias composedown="docker compose down -v"
+alias composeup="docker compose up -d"
+alias dcu="composeup"
+alias dcd="composedown"
+alias dcfd="docker compose -f \$(docker compose ls --format json | jq '.[].ConfigFiles' -r | gum choose --select-if-one) down"
+alias d="docker"
+alias ep10="vim /Users/dietereickstadt/.p10k.zsh"
+
+alias mci="mvn clean install"
+
+alias t="task"
+alias tg="task -g --silent"
+alias tga="task -g --silent --list-all"
