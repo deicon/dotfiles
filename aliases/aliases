@@ -42,6 +42,6 @@ alias ep10="vim /Users/dietereickstadt/.p10k.zsh"
 
 alias mci="mvn clean install"
 
-alias t="task"
 alias tg="task -g --silent"
 alias tga="task -g --silent --list-all"
+alias ls="lsd --color=always -h -G -g -L"

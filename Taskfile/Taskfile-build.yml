@@ -1,0 +1,251 @@
+# https://taskfile.dev
+
+version: '3'
+
+method: timestamp
+tasks:
+
+  clean:
+    label: "Clean Backend and Frontend"
+    cmds:
+      - task: clean-frontend
+      - task: clean-backend
+
+  clean-frontend:
+    label: "Clean Frontend Dist Folder"
+    dir: "{{.USER_WORKING_DIR}}/frontend"
+    cmd: rm -rf dist/**/*
+
+  clean-backend:
+    label: "Run maven clean target"
+    dir: "{{.USER_WORKING_DIR}}/backend"
+    cmds:
+      - rm -rf target/
+      - mvn clean
+
+  clean-rebuild-restart:
+    label: "Clean all and Rebuild Frontend and Backend"
+    deps: [clean-frontend, clean-backend]
+    cmds:
+      - task: build-frontend
+      - task: build-backend
+      - task: up-all
+
+  clean-rebuild-restart-frontend:
+    label: "Clean Frontend and Rebuild Frontend"
+    deps: [clean-frontend]
+    cmds:
+      - task: build-frontend
+      - task: up-frontend
+
+  clean-rebuild-restart-backend:
+    label: "Clean Backend and Rebuild Backend"
+    deps: [clean-backend]
+    cmds:
+      - task: build-backend
+      - task: up-backend
+
+  init-frontend:
+    label: "Initial npm i Setup of Frontend build"
+    dir: "{{.USER_WORKING_DIR}}/frontend"
+    cmds:
+      - npm i
+      - npm run generate-services
+    sources:
+      - package.json
+      - package-lock.json
+    generates:
+      - node_modules/**/*.js
+
+  init-backend:
+    label: "Inital Backend Setup mvn install"
+    dir: "{{.USER_WORKING_DIR}}/backend"
+    cmds:
+      - mvn install -DskipTests=true -DskipITs
+    status:
+      - test -d target/dependency
+
+  build-frontend:
+    label: "Building Frontend, if changed"
+    deps:
+      - init-frontend
+    dir: "{{.USER_WORKING_DIR}}/frontend"
+    cmds:
+      - npm run build:local
+    generates:
+      - dist/**/*
+    sources:
+      - src/**/*.ts
+
+  build-backend:
+    label: "Building Backend, if changed"
+    deps:
+      - init-backend
+    dir: "{{.USER_WORKING_DIR}}/backend"
+    sources:
+      - src/**/*.kt
+      - pom.xml
+    cmds:
+      - ./mvnw install -Pdev -Dskip.surefire.tests -DskipITs -DskipTests -T2C
+
+  build-backend-image:
+    dotenv:
+      - "{{.USER_WORKING_DIR}}/.env"
+      - "{{.USER_WORKING_DIR}}/Taskfile.env"
+    label: "Building Backend Image, if changed"
+    deps:
+      - build-backend
+      - az-login
+    dir: "{{.USER_WORKING_DIR}}/backend"
+    sources:
+      - ./backend/target/vp-digital-investment-backend.jar
+    cmds:
+      - docker buildx build --load --platform "linux/arm64/v8" -f Dockerfile . -t {{.CONTAINER_REGISTRY}}/{{.BACKEND_IMAGE_NAME}}:LOCAL
+
+  build-frontend-image:
+    dotenv:
+        - "{{.USER_WORKING_DIR}}/.env"
+        - "{{.USER_WORKING_DIR}}/Taskfile.env"
+    label: "Building Frontend Image, if changed"
+    deps:
+      - build-frontend
+      - az-login
+    dir: "{{.USER_WORKING_DIR}}/frontend"
+    sources:
+      - dist/vp-digital-investment-frontend/browser/**/*
+    cmds:
+      - docker buildx build --load --platform "linux/arm64/v8" -f Dockerfile . -t {{.CONTAINER_REGISTRY}}/{{.FRONTEND_IMAGE_NAME}}:LOCAL
+
+  build-all-images:
+    label: "Building all Images"
+    deps: [build-frontend-image, build-backend-image]
+
+  down-all:
+    label: "Shutdown all Containers. Stop Docker"
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    cmds:
+      - docker compose --profile backend --profile frontend down -v
+
+  down-frontend:
+    label: "Stop Frontend Container"
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    cmd: docker compose --profile frontend down frontend -v
+
+  down-backend:
+    label: "Stop Backend Container"
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    cmd: docker compose  --profile backend down backend -v
+
+  up-all:
+    label: "Starting all Container"
+    aliases:
+      - ua
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    deps:
+      - build-all-images
+    cmds:
+      - colima start
+      - docker compose --profile backend --profile frontend up -d --wait --wait-timeout 300
+
+  up-backend:
+    label: "Starting Backend Container only"
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    deps:
+      - build-backend-image
+    cmds:
+      - task: colima-start
+      - docker compose --profile backend up -d
+
+  up-frontend:
+    label: "Starting Frontend Container"
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    deps:
+      - build-frontend-image
+    cmds:
+      - task: colima-start
+      - docker compose --profile frontend up -d
+
+  restart-backend:
+    label: "Restarting Backend Container"
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    cmds:
+      - docker compose --profile backend restart backend 
+
+  restart-frontend:
+    label: "Restarting Frontend Container"
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    cmds:
+      - docker compose --profile frontend --profile backend restart frontend
+
+  tilt-up:
+    label: "Prepare all Sources and Start Tilt"
+    deps: [install-tilt, init-backend, init-frontend]
+    dir: "{{.USER_WORKING_DIR}}/docker"
+    cmds:
+      - tilt up
+
+  install-tilt:
+    deps: [install-tilt-macos, install-tilt-windows]
+
+  install-tilt-macos:
+    platforms: [darwin]
+    cmd: curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
+    status:
+      - tilt version
+
+  install-tilt-windows:
+    platforms: [windows]
+    cmd: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.ps1'))
+    status:
+      - where tilt
+    silent: false
+
+  az-login:
+    label: "Login to Azure ACR"
+    run: once
+    cmds:
+      - task: colima-start
+      - az acr login -n dvagcr
+
+  colima-start:
+    run: once
+    label: "Starting Colima (Mac Only)"
+    platforms: [darwin]
+    cmd: colima start
+    status:
+      - docker ps
+
+  colima-stop:
+    run: once
+    label: "Stopping Colima (Mac Only)"
+    platforms: [darwin]
+    cmd: colima stop
+    status:
+      - docker ps && exit 1;
+
+##### E2E Tests
+
+  pw-init *:
+    vars:
+       TEST_DIR: "{{index .MATCH 0}}"
+    dir: "{{.USER_WORKING_DIR}}/{{.TEST_DIR}}"
+    sources:
+      - package.json
+    cmds:
+      - npm i && npm run build
+      - npx playwright install
+
+  pw-test * *:
+    deps: ["pw-init {{.TEST_DIR}}"]
+    vars:
+        TEST_DIR: "{{index .MATCH 0}}"
+        PW_PROJECT: "{{index .MATCH 1}}"
+    dir: "{{.USER_WORKING_DIR}}/{{.TEST_DIR}}"
+    cmds:
+      - npx playwright test --project {{.PW_PROJECT}} ||  npx playwright show-report
+
+  pw-test-report *:
+    vars:
+        TEST_DIR: "{{index .MATCH 0}}"
+    cmds:
+        - npx playwright show-report

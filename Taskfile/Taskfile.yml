@@ -1,0 +1,103 @@
+version: '3'
+
+# Da dieses Taskfile idealerweise im USER HOME liegt, allerdings ausgeführt
+# wird, wenn der USER in seinem Projektverzeuichnis ist werden die Variablen
+# USER_WORKING_DIR auf das Ausführungsverzeichnis gesetzt.
+# Dort wird dann auch die Taskfile.env und build.env gesucht und verwendet.
+dotenv:
+    - "{{.USER_WORKING_DIR}}/Taskfile.env"
+    - "{{.USER_WORKING_DIR}}/build.env"
+
+## Alles rund um lokles bauen, docker images local erstellen und
+## Docker compose setup starten
+includes:
+    build:
+        taskfile: ./Taskfile-build.yml
+        flatten: true
+
+tasks:
+
+    ############# Github PRs and Stuff ####################
+    show-open-prs:
+        aliases:
+            - soprs
+        cmds:
+            - task: show-open-prs-{{.GH_USER_NAME}}
+        preconditions:
+            - sh: test $GH_USER_NAME;
+              msg: "GH_USER_NAME Env Variable not set. Try calling, task open-prs-<username>"
+        silent: true
+
+    show-open-prs-*:
+        deps:
+            - install-gh-cli
+        dir: "{{.USER_WORKING_DIR}}"
+        vars:
+            AUTHOR: "{{index .MATCH 0}}"
+        cmd: gh pr list -A {{ .AUTHOR }} --state open
+
+    view-pr-*:
+        dir: "{{.USER_WORKING_DIR}}"
+        vars:
+            ID: "{{index .MATCH 0}}"
+        cmd: gh pr view {{.ID}} -w
+
+    view-prs:
+        aliases:
+            - oprsv
+            - voprs
+        dir: "{{.USER_WORKING_DIR}}"
+        vars:
+            PR_ID:
+                sh: gh pr list -A deicon --state open | fzf | cut  -f 1
+        cmds:
+            - task: view-pr-{{.PR_ID}}
+
+    install-gh-cli:
+        run: once
+        status:
+            - which gh
+        cmd: brew install gh
+
+        ############### GIT Branching and Stuff #################
+
+    "git-worktree-new-feature *":
+        vars:
+            branchName: "{{index .MATCH 0}}"
+        dir: "{{.USER_WORKING_DIR}}"
+        cmds:
+            - git worktree add {{.USER_WORKING_DIR}}-wt/{{.branchName}} -b {{.branchName}}
+            - echo "cd ..{{.USER_WORKING_DIR}}-wt/{{.branchName}}"
+
+    "git-worktree *":
+        vars:
+            branchName: "{{index .MATCH 0}}"
+        dir: "{{.USER_WORKING_DIR}}"
+        cmds:
+            - git worktree add {{.USER_WORKING_DIR}}-wt/{{.branchName}} {{.branchName}}
+            - echo "cd ..{{.USER_WORKING_DIR}}-wt/{{.branchName}}"
+
+    git-worktree-done:
+        dir: "{{.USER_WORKING_DIR}}"
+        cmd: task "git-worktree-done- "
+
+    "git-worktree-done-*":
+        vars:
+            ARGS: "{{index .MATCH 0}}"
+        dir: "{{.USER_WORKING_DIR}}"
+        cmd: git worktree remove $(git worktree list | gum choose | cut -d ' ' -f1) {{.ARGS}}
+
+
+    git-commit:
+        aliases:
+            - gitc
+        dir: "{{.USER_WORKING_DIR}}"
+        cmds:
+            - git commit --edit -m "$(git diff --staged | gpt-commit-message)"
+
+    ########################### Docker stuff #######################
+    "docker-log *":
+        vars:
+            query: "{{index .MATCH 0}}"
+        cmd: docker logs -f $(echo $(docker ps |grep -v CONTAINER | grep {{ .query }})| cut -d " " -f 1)
+
